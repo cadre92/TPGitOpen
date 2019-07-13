@@ -24,6 +24,9 @@ property add --key spring.datasource.dsb.url 							--value	jdbc:informix-sqli:/
 property add --key spring.datasource.dsb.username						--value	ofacdev
 property add --key spring.datasource.dsb.password						--value	dev@Jaguar
 
+property add --key spring.datasource.dsb.password						--value	dev@Jaguar
+
+
 property add --key sso.byPass											--value	true
 property add --key sso.uri												--value	http://localhost:8081/sso/service/SsoSoapPortV10
 property add --key sso.clientId											--value	FA600F
