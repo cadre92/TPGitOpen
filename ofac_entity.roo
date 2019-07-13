@@ -1,0 +1,58 @@
+project setup --projectName OFAC_WEB_Ba104g --topLevelPackage ch.ofac2.apps.sb.web.ba104g.roo --java 8 --multimodule
+
+jpa setup --provider HIBERNATE --database MSSQL --hostName localhost --databaseName poc --userName informix --password password
+
+property add --key server.context-path 									--value /ofac
+property add --key spring.devtools.restart.enabled 						--value false
+property add --key spring.jackson.date-format 							--value dd-MM-yyyy
+property add --key spring.jpa.properties.hibernate.format_sql 			--value true
+property add --key spring.jpa.properties.hibernate.generate_statistics 	--value false
+property add --key spring.jpa.properties.hibernate.hbm2ddl.auto 		--value none
+property add --key spring.jpa.show-sql 									--value true
+property add --key spring.jpa.hibernate.naming.physical-strategy 		--value org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+property remove --key spring.jpa.properties.hibernate.dialect
+property remove --key spring.datasource.driver-class-name
+property remove --key spring.datasource.url
+property remove --key spring.datasource.username
+property remove --key spring.datasource.password
+
+property add --key spring.jpa.properties.hibernate.dialect 				--value org.hibernate.dialect.Informix10Dialect
+property add --key spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults 				--value false
+property add --key spring.datasource.dsb.driver-class-name				--value com.informix.jdbc.IfxDriver
+property add --key spring.datasource.dsb.url 							--value	jdbc:informix-sqli://192.168.221.21:5001/dsb:NEWCODESET=IBM850,8859-1,819;IFX_TRIMTRAILINGSPACES=1
+property add --key spring.datasource.dsb.username						--value	ofacdev
+property add --key spring.datasource.dsb.password						--value	dev@Jaguar
+
+property add --key sso.byPass											--value	true
+property add --key sso.uri												--value	http://localhost:8081/sso/service/SsoSoapPortV10
+property add --key sso.clientId											--value	FA600F
+property add --key sso.codePgm											--value	FA600G
+property add --key ofac.webjars.enhanceResourceHandler					--value	false
+property add --key login.url												--value	http://intrawas.ofac.ch/intranet
+
+settings add --name spring.roo.thymeleaf.templates-location --value ..\template --force
+
+module focus  --moduleName model
+
+entity jpa --class ~.entity.RooCodeValue --entityFormatExpression "#{codeValueName}"
+field string 	--fieldName codeType     	 		
+field string 	--fieldName codeVal     	 				
+field string 	--fieldName codeValueName     
+
+interface --class ~.entity.RooEntity
+
+module focus --moduleName repository
+
+dto --class repository:~.dto.RooCodeTypeRequest
+field string	--fieldName codeType
+field string	--fieldName codeValueName
+field string	--fieldName page
+field number	--fieldName pageSize	--type java.lang.Integer
+
+repository jpa --all
+
+finder add --entity model:~.entity.RooCodeValue 	--name findByCodeType 		--formBean repository:~.dto.RooCodeTypeRequest
+
+module focus --moduleName service-api
+service --all

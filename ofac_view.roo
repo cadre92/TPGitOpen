@@ -1,0 +1,8 @@
+module focus --moduleName application
+web mvc setup
+web mvc language --code fr
+web mvc view setup 	--type THYMELEAF
+web mvc controller 	--entity model:~.entity.RooCodeValue			--package application:~.web --responseType JSON
+web mvc controller	--all --responseType THYMELEAF
+
+web mvc finder 		--entity model:~.entity.RooCodeValue	--package application:~.web --responseType JSON
