@@ -6,3 +6,4 @@ web mvc controller 	--entity model:~.entity.RooCodeValue			--package application
 web mvc controller	--all --responseType THYMELEAF
 web mvc controller	--all --responseType THYMELEAF
 web mvc finder 		--entity model:~.entity.RooCodeValue	--package application:~.web --responseType JSON
+web mvc finder 		--entity model:~.entity.RooCodeValue	--package application:~.web --responseType xml
